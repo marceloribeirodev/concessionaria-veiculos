@@ -21,4 +21,12 @@ public class ConverteDados {
             throw new RuntimeException(e);
         }
     }
+
+    public <T> T obterDados(String json, Class<T> classe){
+        try {
+            return objectMapper.readValue(json, classe);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

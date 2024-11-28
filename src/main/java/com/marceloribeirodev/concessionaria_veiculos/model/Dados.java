@@ -1,18 +1,16 @@
 package com.marceloribeirodev.concessionaria_veiculos.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class Veiculo {
+public class Dados {
     private String codigo;
 
     private String nomeVeiculo;
 
-   public Veiculo(@JsonProperty("codigo") String codigo,
-                  @JsonProperty("nome") String nome) {
+   public Dados(@JsonProperty("codigo") String codigo,
+                @JsonProperty("nome") String nome) {
         this.codigo = codigo;
         this.nomeVeiculo = nome;
     }
@@ -29,8 +27,8 @@ public class Veiculo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Veiculo veiculo = (Veiculo) o;
-        return Objects.equals(codigo, veiculo.codigo);
+        Dados dados = (Dados) o;
+        return Objects.equals(codigo, dados.codigo);
     }
 
     @Override
