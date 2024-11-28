@@ -98,8 +98,11 @@ public class Principal {
             veiculos.add(veiculoSelecionado);
         }
 
-        System.out.println("Todos os veículos filtrados com avaliações por ano: ");
-        veiculos.forEach(System.out::println);
+        System.out.println("\nTodos os veículos filtrados com avaliações por ano: ");
+        veiculos.forEach(e -> System.out.println("Nome do Veículo: " + e.getModelo()
+                + " | Ano: " + e.getAno()
+                + " | Valor: " + e.getValor()
+                + " | Combustível: " + e.getCombustivel()));
 
     }
 }
