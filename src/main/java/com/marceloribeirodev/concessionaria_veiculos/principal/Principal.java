@@ -2,10 +2,12 @@ package com.marceloribeirodev.concessionaria_veiculos.principal;
 
 import com.marceloribeirodev.concessionaria_veiculos.model.Dados;
 import com.marceloribeirodev.concessionaria_veiculos.model.ModeloVeiculo;
+import com.marceloribeirodev.concessionaria_veiculos.model.Veiculo;
 import com.marceloribeirodev.concessionaria_veiculos.service.ConsumoApi;
 import com.marceloribeirodev.concessionaria_veiculos.service.ConverteDados;
 import org.springframework.boot.Banner;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
@@ -72,6 +74,27 @@ public class Principal {
                 .forEach(e -> System.out.println("Código: " + e.getCodigo()
                 + " | Modelo do Veículo: " + e.getNomeVeiculo()));
 
+        System.out.println("Digite o código do modelo que deseja visualizar: ");
+        String codigoModeloVeiculoSelecionado = leitura.nextLine();
 
+        String apiModeloVeiculoSelecionado = URL_BASE
+                + tipoVeiculo
+                + "/marcas/"
+                + codigoVeiculo
+                + "/modelos/"
+                + codigoModeloVeiculoSelecionado
+                + "/anos";
+
+        String jsonModeloVeiculoSelecionado = consumirApi.obterDados(apiModeloVeiculoSelecionado);
+        List<Dados> modeloVeiculoSelecionado = converteDados.obterLista(jsonModeloVeiculoSelecionado, Dados.class);
+        List<Veiculo> veiculos = new ArrayList<>();
+
+        for (int i = 0; i < modeloVeiculoSelecionado.size(); i++){
+            String jsonModeloVeiculoComAno = consumirApi.obterDados(apiModeloVeiculoSelecionado
+                    + "/"
+                    + modeloVeiculoSelecionado.get(i).getCodigo());
+
+            System.out.println(modeloVeiculoSelecionado.get(i).getCodigo());
+        }
     }
 }
