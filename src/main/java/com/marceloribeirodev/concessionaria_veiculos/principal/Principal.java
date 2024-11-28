@@ -4,19 +4,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marceloribeirodev.concessionaria_veiculos.model.Veiculo;
 import com.marceloribeirodev.concessionaria_veiculos.service.ConsumoApi;
+import com.marceloribeirodev.concessionaria_veiculos.service.ConverteDados;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Principal {
 
     private Scanner leitura = new Scanner(System.in);
 
     // CONSTANTES
-    private final String ENDERECO = "https://parallelum.com.br/fipe/api/v1/";
+    private final String URL_BASE = "https://parallelum.com.br/fipe/api/v1/";
 
     private ConsumoApi consumirApi = new ConsumoApi();
+
+    private ConverteDados converteDados = new ConverteDados();
 
     public void inicializandoSistema(){
         System.out.println("Digite o tipo do veículo: \n 1 - Carro\n 2 - Moto\n 3 - Caminhão\nSe nenhum for digitado o default será Carro");
@@ -37,22 +38,17 @@ public class Principal {
                 tipoVeiculo = "carro";
         }
 
-        String apiVeiculo = ENDERECO + tipoVeiculo + "/marcas";
-
+        String apiVeiculo = URL_BASE + tipoVeiculo + "/marcas";
         String api = consumirApi.obterDados(apiVeiculo);
 
-        System.out.println(api);
+        List<Veiculo> marcasVeiculos = converteDados.obterLista(api, Veiculo.class);
 
-        List<DadosVeiculo> veiculoList = new ArrayList<>();
-        List<Veiculo> veiculos = new ArrayList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
+        // Imprimir as marcas e seus determinados códigos
+        marcasVeiculos.stream().sorted(Comparator.comparing(Veiculo::getCodigo))
+                .forEach(e -> System.out.println("Código: " + e.getCodigo()
+                + " | Nome do Veículo: " + e.getNomeVeiculo()));
 
-        try {
-            veiculos = objectMapper.readValue(api, objectMapper.getTypeFactory().constructCollectionType(List.class, Veiculo.class));
-        }catch (JsonProcessingException exception) {
-            throw new RuntimeException("Error parsing JSON body: " + exception.getMessage(), exception);
-        }
 
-        veiculos.forEach(System.out::println);
+
     }
 }
