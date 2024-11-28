@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -93,8 +94,12 @@ public class Principal {
             String jsonModeloVeiculoComAno = consumirApi.obterDados(apiModeloVeiculoSelecionado
                     + "/"
                     + modeloVeiculoSelecionado.get(i).getCodigo());
-
-            System.out.println(modeloVeiculoSelecionado.get(i).getCodigo());
+            Veiculo veiculoSelecionado = converteDados.obterDados(jsonModeloVeiculoComAno, Veiculo.class);
+            veiculos.add(veiculoSelecionado);
         }
+
+        System.out.println("Todos os veículos filtrados com avaliações por ano: ");
+        veiculos.forEach(System.out::println);
+
     }
 }

@@ -1,5 +1,7 @@
 package com.marceloribeirodev.concessionaria_veiculos.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,7 +11,6 @@ public class Veiculo {
     private String modelo;
     private String valor;
     private String combustivel;
-
     private Integer ano;
 
     public Veiculo(@JsonProperty("Modelo") String modelo,
@@ -36,5 +37,31 @@ public class Veiculo {
 
     public Integer getAno() {
         return ano;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+
+    public void setCombustivel(String combustivel) {
+        this.combustivel = combustivel;
+    }
+
+    public void setAno(Integer ano) {
+        this.ano = ano;
+    }
+
+    @Override
+    public String toString() {
+        return "Veiculo{" +
+                "modelo='" + modelo + '\'' +
+                ", valor='" + valor + '\'' +
+                ", combustivel='" + combustivel + '\'' +
+                ", ano=" + ano +
+                '}';
     }
 }
