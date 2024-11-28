@@ -23,4 +23,11 @@ public class Dados {
         return nomeVeiculo;
     }
 
+    @Override
+    public String toString() {
+        return "Dados{" +
+                "codigo='" + codigo + '\'' +
+                ", nomeVeiculo='" + nomeVeiculo + '\'' +
+                '}';
+    }
 }
