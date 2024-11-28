@@ -56,12 +56,22 @@ public class Principal {
         String apiModeloVeiculo = URL_BASE + tipoVeiculo + "/marcas/"+ codigoVeiculo + "/modelos";
         String jsonModeloVeiculo = consumirApi.obterDados(apiModeloVeiculo);
 
-        System.out.println(jsonModeloVeiculo);
-        var modeloVeiculos = converteDados.obterDados(jsonModeloVeiculo, ModeloVeiculo.class);
+        ModeloVeiculo modeloVeiculos = converteDados.obterDados(jsonModeloVeiculo, ModeloVeiculo.class);
 
         modeloVeiculos.getModelos().stream()
                 .sorted(Comparator.comparing(Dados::getCodigo))
                 .forEach(e -> System.out.println("Código: " + e.getCodigo()
                         + " | Modelo do Veículo: " + e.getNomeVeiculo()));
+
+        System.out.println("Digite um trecho do modelo que queria visualizar: ");
+        String trechoModeloVeiculo = leitura.nextLine();
+
+
+        modeloVeiculos.getModelos().stream()
+                .filter(e -> e.getNomeVeiculo().toLowerCase().contains(trechoModeloVeiculo))
+                .forEach(e -> System.out.println("Código: " + e.getCodigo()
+                + " | Modelo do Veículo: " + e.getNomeVeiculo()));
+
+
     }
 }
